@@ -1,3 +1,6 @@
+let blink = false
+let blinkDelay = 1000
+
 enum Movement {
     //% block="avancer"
     Forward = 1,
@@ -19,6 +22,17 @@ enum State {
     High
 }
 
+function blinkLED() {
+    while (blink) {
+        pins.digitalWritePin(DigitalPin.P0, 1)
+        basic.pause(blinkDelay)
+        pins.digitalWritePin(DigitalPin.P0, 0)
+        basic.pause(blinkDelay)
+    }
+}
+
+basic.forever(blinkLED)
+
 /**
  * Custom blocks
  */
@@ -39,7 +53,27 @@ namespace Oobybot {
     //% block="contrôler les LED à l'état $state"
     //% group="LED"
     export function ledControl(state: State): void {
+        blink = false
         pins.digitalWritePin(DigitalPin.P0, state)
+    }
+
+    /**
+     * Permet de faire clignoter les LED du robot Oobybot
+     * @param delay Délai entre chaque clignotement des LED du robot
+     */
+    //% block="clignoter LED délai $delay"
+    //% group="LED"
+    export function ledBlink(delay: number): void {
+        blink = true
+    }
+
+    /**
+     * Éteint les LED du robot Oobybot
+     */
+    //% block="éteindre LED"
+    //% group="LED"
+    export function ledStop(): void {
+        blink = false
     }
 
     /**
