@@ -110,6 +110,20 @@ namespace Oobybot {
     }
 
     /**
+     * Permet de tourner le robot sur lui même d'un certain angle selon une direction (droite / gauche)
+     * @param side La direction de rotation
+     * @param angle L'angle de rotation
+     */
+    //% block="[Servo] tourner à $side de $angle"
+    //% subcategory="Servomoteurs"
+    //% group="Mouvement basique"
+    export function servoRotateAngle(side: Side, angle: number): void {
+        servoRotate(side, 100)
+        basic.pause(angle * 10 / (360 * 2 * 20))
+        servoStop()
+    }
+
+    /**
      * Permet d'arrêter la course des servomoteurs continus du robot Oobybot
      */
     //% block="[Servo] arrêter la course du robot"
@@ -168,6 +182,20 @@ namespace Oobybot {
             pins.analogWritePin(AnalogPin.P3, speed * 10.23)
             pins.analogWritePin(AnalogPin.P4, speed * 10.23)
         }
+    }
+
+    /**
+     * Permet de tourner le robot sur lui même d'un certain angle selon une direction (droite / gauche)
+     * @param side La direction de rotation
+     * @param angle L'angle de rotation
+     */
+    //% block="[Servo] tourner à $side de $angle"
+    //% subcategory="Servomoteurs"
+    //% group="Mouvement basique"
+    export function dcRotateAngle(side: Side, angle: number): void {
+        dcRotate(side, 100)
+        basic.pause(angle * 10 / (360 * 2 * 30))
+        dcStop()
     }
 
     /**
