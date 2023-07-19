@@ -20,6 +20,13 @@ enum Side {
     Left = 1
 }
 
+enum SideM {
+    //% block="droit"
+    Right = -1,
+    //% block="gauche"
+    Left = 1
+}
+
 enum State {
     //% block="bas"
     Low,
@@ -282,8 +289,8 @@ namespace Oobybot {
      */
     //% block="état capteur suiveur de ligne $side"
     //% group="Capteurs"
-    export function lineFollowerState(side: Side): boolean {
-        if (side == Side.Right) {
+    export function lineFollowerState(side: SideM): boolean {
+        if (side == SideM.Right) {
             return pins.digitalReadPin(DigitalPin.P3) == 1
         }
         return pins.digitalReadPin(DigitalPin.P4) == 1
