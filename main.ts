@@ -291,8 +291,8 @@ namespace Oobybot {
     //% group="Capteurs"
     export function lineFollowerState(side: SideM): boolean {
         if (side == SideM.Right) {
-            return pins.digitalReadPin(DigitalPin.P3) == 1
+            return pins.digitalReadPin(DigitalPin.P5) == 1
         }
-        return pins.digitalReadPin(DigitalPin.P4) == 1
+        return pins.digitalReadPin(DigitalPin.P6) == 1
     }
 }
