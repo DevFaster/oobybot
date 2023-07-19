@@ -275,4 +275,17 @@ namespace Oobybot {
     export function ultrasonicDistanceLessThan(distance: number, unit: DistanceUnit): boolean {
         return ultrasonicDistance(unit) <= distance
     }
+
+    /**
+     * Renvoi l'état du capteur suiveur de ligne (droit / gauche) du robot Oobybot (Vrai si noir détecté, Faux sinon)
+     * @param side Le capteur suiveur de ligne droit ou gauche
+     */
+    //% block="état capteur suiveur de ligne $side"
+    //% group="Capteurs"
+    export function lineFollowerState(side: Side): boolean {
+        if (side == Side.Right) {
+            return pins.digitalReadPin(DigitalPin.P3) == 1
+        }
+        return pins.digitalReadPin(DigitalPin.P4) == 1
+    }
 }
