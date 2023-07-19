@@ -1,3 +1,8 @@
+const servoSpeed = 20 // trs/min
+const dcSpeed = 30 // trs/min
+const wheelDistance = 10 // cm
+const wheelRadius = 2 // cm
+
 let blink = false
 let blinkDelay = 1000
 
@@ -119,7 +124,7 @@ namespace Oobybot {
     //% group="Mouvement basique"
     export function servoRotateAngle(side: Side, angle: number): void {
         servoRotate(side, 100)
-        basic.pause(angle * 10 / (360 * 2 * 20))
+        basic.pause(angle * wheelDistance / (360 * wheelRadius * servoSpeed))
         servoStop()
     }
 
@@ -190,11 +195,11 @@ namespace Oobybot {
      * @param angle L'angle de rotation
      */
     //% block="[Servo] tourner à $side de $angle"
-    //% subcategory="Servomoteurs"
+    //% subcategory="Moteurs CC"
     //% group="Mouvement basique"
     export function dcRotateAngle(side: Side, angle: number): void {
         dcRotate(side, 100)
-        basic.pause(angle * 10 / (360 * 2 * 30))
+        basic.pause(angle * wheelDistance / (360 * wheelRadius * dcSpeed))
         dcStop()
     }
 
