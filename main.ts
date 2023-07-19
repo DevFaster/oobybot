@@ -119,7 +119,7 @@ namespace Oobybot {
      * @param side La direction de rotation
      * @param angle L'angle de rotation
      */
-    //% block="[Servo] tourner à $side de $angle"
+    //% block="[Servo] tourner à $side de $angle °"
     //% subcategory="Servomoteurs"
     //% group="Mouvement basique"
     export function servoRotateAngle(side: Side, angle: number): void {
@@ -194,7 +194,7 @@ namespace Oobybot {
      * @param side La direction de rotation
      * @param angle L'angle de rotation
      */
-    //% block="[Servo] tourner à $side de $angle"
+    //% block="[MCC] tourner à $side de $angle °"
     //% subcategory="Moteurs CC"
     //% group="Mouvement basique"
     export function dcRotateAngle(side: Side, angle: number): void {
