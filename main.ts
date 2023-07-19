@@ -22,6 +22,13 @@ enum State {
     High
 }
 
+enum DistanceUnit {
+    //% block="cm"
+    CM,
+    //% block="inch",
+    INCH
+}
+
 function blinkLED() {
     while (blink) {
         pins.digitalWritePin(DigitalPin.P0, 1)
@@ -43,7 +50,6 @@ namespace Oobybot {
      */
     //% block="initialiser l'Oobybot"
     export function init(): void {
-        makerbit.connectUltrasonicDistanceSensor(DigitalPin.P5, DigitalPin.P8)
     }
 
     /**
@@ -59,12 +65,13 @@ namespace Oobybot {
 
     /**
      * Permet de faire clignoter les LED du robot Oobybot
-     * @param delay Délai entre chaque clignotement des LED du robot
+     * @param delay Délai entre chaque clignotement des LED du robot (en ms)
      */
-    //% block="clignoter LED délai $delay"
+    //% block="clignoter LED délai $delay ms"
     //% group="LED"
     export function ledBlink(delay: number): void {
         blink = true
+        blinkDelay = delay
     }
 
     /**
@@ -203,7 +210,26 @@ namespace Oobybot {
     //% block="distance $unit"
     //% group="Capteurs"
     export function ultrasonicDistance(unit: DistanceUnit): number {
-        return makerbit.getUltrasonicDistance(unit)
+        pins.digitalWritePin(DigitalPin.P8, 1)
+        basic.pause(1)
+        pins.digitalWritePin(DigitalPin.P8, 0)
+
+        let startImpulsion = 0
+        let endImpulsion = 0
+        while (pins.digitalReadPin(DigitalPin.P16) == 0) {
+            startImpulsion = input.runningTimeMicros()
+        }
+        while (pins.digitalReadPin(DigitalPin.P16) == 1) {
+            endImpulsion = input.runningTimeMicros()
+            if (endImpulsion - startImpulsion > 8824) {
+                break
+            }
+        }
+        
+        if (unit == DistanceUnit.CM) {
+            return Math.round((endImpulsion - startImpulsion) * 0.17)
+        }
+        return Math.round((endImpulsion - startImpulsion) * 0.067)
     }
 
     /**
@@ -214,6 +240,6 @@ namespace Oobybot {
     //% block="distance est inférieure à $distance $unit"
     //% group="Capteurs"
     export function ultrasonicDistanceLessThan(distance: number, unit: DistanceUnit): boolean {
-        return makerbit.isUltrasonicDistanceLessThan(distance, unit)
+        return ultrasonicDistance(unit) <= distance
     }
 }
