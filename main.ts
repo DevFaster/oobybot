@@ -94,7 +94,7 @@ basic.forever(lineFollow)
 /**
  * Custom blocks
  */
-//% weight=100 color=#af5200 icon=""
+//% weight=100 color=#af5200 icon="\f188"
 namespace Oobybot {
     function checkInit(): void {
         if (!error) {
