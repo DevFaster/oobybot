@@ -200,7 +200,7 @@ namespace Oobybot {
      * @param direction La direction du mouvement
      * @param speed La vitesse des moteurs
      */
-    //% block="[Servo] contrôler le robot $direction vitesse $speed %"
+    //% block="$direction à $speed %"
     //% subcategory="Mouvement"
     //% group="Mouvement basique"
     export function move(direction: Movement, speed: number): void {
@@ -217,7 +217,7 @@ namespace Oobybot {
      * @param side La direction de rotation
      * @param speed La vitesse des moteurs
      */
-    //% block="[Servo] pivoter vers la %side vitesse %speed %"
+    //% block="tourner à %side à %speed %"
     //% subcategory="Mouvement"
     //% group="Mouvement basique"
     export function rotate(side: Side, speed: number): void {
@@ -234,7 +234,7 @@ namespace Oobybot {
      * @param side La direction de rotation
      * @param angle L'angle de rotation
      */
-    //% block="[Servo] tourner à $side de $angle °"
+    //% block="tourner à $side de $angle °"
     //% subcategory="Mouvement"
     //% group="Mouvement basique"
     export function rotateAngle(side: Side, angle: number): void {
@@ -249,7 +249,7 @@ namespace Oobybot {
     /**
      * Permet d'arrêter la course du robot Oobybot
      */
-    //% block="[Servo] arrêter la course du robot"
+    //% block="arrêter la course du robot"
     //% subcategory="Mouvement"
     //% group="Mouvement basique"
     export function moveStop(): void {
@@ -267,7 +267,7 @@ namespace Oobybot {
      * @param  direction Le sens de rotation du moteur (avant / arrière)
      * @param speed La vitesse de rotation du moteur
      */
-    //% block="[Servo] contrôler le moteur $side direction $direction vitesse $speed %"
+    //% block="contrôler le moteur $side pour $direction à $speed %"
     //% subcategory="Mouvement"
     //% group="Mouvement avancé"
     export function moveControl(side: Side, direction: Movement, speed: number): void {
