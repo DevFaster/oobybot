@@ -3,6 +3,18 @@ const dcSpeed = 30 // trs/min
 const wheelDistance = 10 // cm
 const wheelRadius = 2 // cm
 
+let ledPin = DigitalPin.P0
+let servoRightPin = AnalogPin.P1
+let servoLeftPin = AnalogPin.P2
+let dcRightForwardPin = servoRightPin
+let dcLeftForwardPin = servoLeftPin
+let dcRightBackwardPin = AnalogPin.P3
+let dcLeftBackwardPin = AnalogPin.P4
+let ultrasonicTriggerPin = DigitalPin.P8
+let ultrasonicEchoPin = DigitalPin.P16
+let lineFollowerRightPin = DigitalPin.P5
+let lineFollowerLeftPin = DigitalPin.P6
+
 let blink = false
 let blinkDelay = 1000
 let follow = false
@@ -54,9 +66,9 @@ let error = false
 
 function blinkLED(): void {
     while (blink) {
-        pins.digitalWritePin(DigitalPin.P0, 1)
+        pins.digitalWritePin(ledPin, 1)
         basic.pause(blinkDelay)
-        pins.digitalWritePin(DigitalPin.P0, 0)
+        pins.digitalWritePin(ledPin, 0)
         basic.pause(blinkDelay)
     }
 }
@@ -117,6 +129,76 @@ namespace Oobybot {
     }
 
     /**
+     * Changer la broche commandant les LED du robot Oobybot
+     * @param pin La broche de commande associée aux LED
+     */
+    //% block="changer broche LED $pin"
+    //% group="Avancé"
+    export function changeLedPin(pin: DigitalPin): void {
+        ledPin = pin
+    }
+
+    /**
+     * Changer la broche commandant le servomoteur droit ou gauche du robot (ne sert à rien si le robot est défini sur les moteurs CC)
+     * @param side Le servomoteur continu du côté droit ou gauche
+     * @param pin La broche de commande associée au servomoteur (droit / gauche)
+     */
+    //% block="changer broche servo $side $pin"
+    //% group="Avancé"
+    export function changeServoPin(side: SideM, pin: AnalogPin): void {
+        if (side == SideM.Right) {
+            servoRightPin = pin
+        } else {
+            servoLeftPin = pin
+        }
+    }
+
+    /**
+     * Changer la broche commandant le moteurs CC droit ou gauche du robot (ne sert à rien si le robot est défini sur les servomoteurs)
+     * @param side Le moteur CC du côté droit ou gauche
+     * @param forwardPin La broche de commande associée au sens avant du moteur CC droit ou gauche
+     * @param backwardPin La broche de commande associée au sens arrière du moteur CC droit ou gauche
+     */
+    //% block="changer broche moteur CC $side broche avant $forwardPin broche arrière $backwardPin"
+    //% group="Avancé"
+    export function changeDcPin(side: SideM, forwardPin: AnalogPin, backwardPin: AnalogPin): void {
+        if (side == SideM.Right) {
+            dcRightForwardPin = forwardPin
+            dcRightBackwardPin = backwardPin
+        } else {
+            dcLeftForwardPin = forwardPin
+            dcLeftBackwardPin = backwardPin
+        }
+    }
+
+    /**
+     * Changer les broche commandant le capteur ultrason du robot Oobybot
+     * @param triggerPin La broche associée à la commande d'émission du capteur ultrason
+     * @param echoPin La broche associée à la commande de réception du capteur ultrason
+     */
+    //% block="changer broche capteur ultrason trig $triggerPin echo $echoPin"
+    //% group="Avancé"
+    export function changeUltrasonicPins(triggerPin: DigitalPin, echoPin: DigitalPin): void {
+        ultrasonicTriggerPin = triggerPin
+        ultrasonicEchoPin = echoPin
+    }
+
+    /**
+     * Changer la broche commandant le capteur suiveur de ligne droit ou gauche du robot Oobybot
+     * @param side Le capteur suiveur de ligne du côté droit ou gauche
+     * @param pin La broche de commande associée au capteur suiveur de ligne
+     */
+    //% block="changer broche capteur suiveur de ligne $side $pin"
+    //% group="Avancé"
+    export function changeLineFollowerPin(side: SideM, pin: DigitalPin): void {
+        if (side == SideM.Right) {
+            lineFollowerRightPin = pin
+        } else {
+            lineFollowerLeftPin = pin
+        }
+    }
+
+    /**
      * Permet de contrôler les LED du robot Oobybot
      * @param state L'état des LED du robot
      */
@@ -124,7 +206,7 @@ namespace Oobybot {
     //% group="LED"
     export function ledControl(state: State): void {
         blink = false
-        pins.digitalWritePin(DigitalPin.P0, state)
+        pins.digitalWritePin(ledPin, state)
     }
 
     /**
@@ -149,13 +231,13 @@ namespace Oobybot {
     }
     
     function servoMove(direction: Movement, speed: number): void {
-        pins.servoWritePin(AnalogPin.P1, 90 + direction * speed * 0.9)
-        pins.servoWritePin(AnalogPin.P2, 90 - direction * speed * 0.9)
+        pins.servoWritePin(servoRightPin, 90 + direction * speed * 0.9)
+        pins.servoWritePin(servoLeftPin, 90 - direction * speed * 0.9)
     }
 
     function servoRotate(side: Side, speed: number): void {
-        pins.servoWritePin(AnalogPin.P1, 90 + side * speed * 0.9)
-        pins.servoWritePin(AnalogPin.P2, 90 + side * speed * 0.9)
+        pins.servoWritePin(servoRightPin, 90 + side * speed * 0.9)
+        pins.servoWritePin(servoLeftPin, 90 + side * speed * 0.9)
     }
 
     function servoRotateAngle(side: Side, angle: number): void {
@@ -165,35 +247,35 @@ namespace Oobybot {
     }
 
     export function servoStop(): void {
-        pins.servoWritePin(AnalogPin.P1, 90)
-        pins.servoWritePin(AnalogPin.P2, 90)
+        pins.servoWritePin(servoRightPin, 90)
+        pins.servoWritePin(servoLeftPin, 90)
     }
 
     function servoControl(side: SideM, direction: Movement, speed: number): void {
         if (side == SideM.Right) {
-            pins.servoWritePin(AnalogPin.P1, 90 + direction * speed * 0.9)
+            pins.servoWritePin(servoRightPin, 90 + direction * speed * 0.9)
         } else {
-            pins.servoWritePin(AnalogPin.P2, 90 - direction * speed * 0.9)
+            pins.servoWritePin(servoLeftPin, 90 - direction * speed * 0.9)
         }
     }
     
     function dcMove(direction: Movement, speed: number): void {
         if (direction == Movement.Forward) {
-            pins.analogWritePin(AnalogPin.P1, speed * 10.23)
-            pins.analogWritePin(AnalogPin.P4, speed * 10.23)
+            pins.analogWritePin(dcRightForwardPin, speed * 10.23)
+            pins.analogWritePin(dcLeftBackwardPin, speed * 10.23)
         } else {
-            pins.analogWritePin(AnalogPin.P3, speed * 10.23)
-            pins.analogWritePin(AnalogPin.P2, speed * 10.23)
+            pins.analogWritePin(dcRightBackwardPin, speed * 10.23)
+            pins.analogWritePin(dcLeftForwardPin, speed * 10.23)
         }
     }
 
     function dcRotate(side: Side, speed: number): void {
         if (side == Side.Left) {
-            pins.analogWritePin(AnalogPin.P1, speed * 10.23)
-            pins.analogWritePin(AnalogPin.P2, speed * 10.23)
+            pins.analogWritePin(dcRightForwardPin, speed * 10.23)
+            pins.analogWritePin(dcLeftForwardPin, speed * 10.23)
         } else {
-            pins.analogWritePin(AnalogPin.P3, speed * 10.23)
-            pins.analogWritePin(AnalogPin.P4, speed * 10.23)
+            pins.analogWritePin(dcRightBackwardPin, speed * 10.23)
+            pins.analogWritePin(dcLeftBackwardPin, speed * 10.23)
         }
     }
 
@@ -204,22 +286,22 @@ namespace Oobybot {
     }
 
     function dcStop(): void {
-        pins.analogWritePin(AnalogPin.P1, 0)
-        pins.analogWritePin(AnalogPin.P4, 0)
+        pins.analogWritePin(dcRightForwardPin, 0)
+        pins.analogWritePin(dcLeftBackwardPin, 0)
     }
 
     export function dcControl(side: SideM, direction: Movement, speed: number): void {
         if (side == SideM.Right) {
             if (direction == Movement.Forward) {
-                pins.analogWritePin(AnalogPin.P1, speed * 10.23)
+                pins.analogWritePin(dcRightForwardPin, speed * 10.23)
             } else {
-                pins.analogWritePin(AnalogPin.P3, speed * 10.23)
+                pins.analogWritePin(dcRightBackwardPin, speed * 10.23)
             }
         } else {
             if (direction == Movement.Forward) {
-                pins.analogWritePin(AnalogPin.P2, speed * 10.23)
+                pins.analogWritePin(dcLeftForwardPin, speed * 10.23)
             } else {
-                pins.analogWritePin(AnalogPin.P4, speed * 10.23)
+                pins.analogWritePin(dcLeftBackwardPin, speed * 10.23)
             }
         }
     }
@@ -324,16 +406,16 @@ namespace Oobybot {
     //% subcategory="Capteurs"
     //% group="Capteur ultrason"
     export function ultrasonicDistance(unit: DistanceUnit): number {
-        pins.digitalWritePin(DigitalPin.P8, 1)
+        pins.digitalWritePin(ultrasonicTriggerPin, 1)
         basic.pause(1)
-        pins.digitalWritePin(DigitalPin.P8, 0)
+        pins.digitalWritePin(ultrasonicTriggerPin, 0)
 
         let startImpulsion = 0
         let endImpulsion = 0
-        while (pins.digitalReadPin(DigitalPin.P16) == 0) {
+        while (pins.digitalReadPin(ultrasonicEchoPin) == 0) {
             startImpulsion = input.runningTimeMicros()
         }
-        while (pins.digitalReadPin(DigitalPin.P16) == 1) {
+        while (pins.digitalReadPin(ultrasonicEchoPin) == 1) {
             endImpulsion = input.runningTimeMicros()
             if (endImpulsion - startImpulsion > 8824) {
                 break
@@ -369,9 +451,9 @@ namespace Oobybot {
     //% group="Capteur suiveur de ligne"
     export function lineFollowerState(side: SideM): boolean {
         if (side == SideM.Right) {
-            return pins.digitalReadPin(DigitalPin.P5) == 1
+            return pins.digitalReadPin(lineFollowerRightPin) == 1
         }
-        return pins.digitalReadPin(DigitalPin.P6) == 1
+        return pins.digitalReadPin(lineFollowerLeftPin) == 1
     }
 
     /**
