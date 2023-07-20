@@ -5,6 +5,7 @@ const wheelRadius = 2 // cm
 
 let blink = false
 let blinkDelay = 1000
+let follow = false
 
 enum Version {
     //% block="servomoteurs"
@@ -51,7 +52,7 @@ enum DistanceUnit {
 let version = 0
 let error = false
 
-function blinkLED() {
+function blinkLED(): void {
     while (blink) {
         pins.digitalWritePin(DigitalPin.P0, 1)
         basic.pause(blinkDelay)
@@ -61,6 +62,34 @@ function blinkLED() {
 }
 
 basic.forever(blinkLED)
+
+function lineFollow(): void {
+    while (follow) {
+        if (!Oobybot.lineFollowerState(SideM.Left) && !Oobybot.lineFollowerState(SideM.Right)) {
+            Oobybot.move(Movement.Forward, 50)
+        }
+        if (!Oobybot.lineFollowerState(SideM.Left) && Oobybot.lineFollowerState(SideM.Right)) {
+            Oobybot.moveControl(SideM.Left, Movement.Forward, 30)
+            while (Oobybot.lineFollowerState(SideM.Right)) {
+                basic.pause(1)
+            }
+            Oobybot.move(Movement.Forward, 50)
+        }
+        if (Oobybot.lineFollowerState(SideM.Left) && !Oobybot.lineFollowerState(SideM.Right)) {
+            Oobybot.moveControl(SideM.Right, Movement.Forward, 30)
+            while (Oobybot.lineFollowerState(SideM.Left)) {
+                basic.pause(1)
+            }
+            Oobybot.move(Movement.Forward, 50)
+        }
+        if (!Oobybot.lineFollowerState(SideM.Left) && !Oobybot.lineFollowerState(SideM.Right)) {
+            Oobybot.moveStop()
+            follow = false
+        }
+    }
+}
+
+basic.forever(lineFollow)
 
 /**
  * Custom blocks
@@ -283,7 +312,8 @@ namespace Oobybot {
      * @param unit L'unité de mesure de la distance
      */
     //% block="distance $unit"
-    //% group="Capteurs"
+    //% subcategory="Capteurs"
+    //% group="Capteur ultrason"
     export function ultrasonicDistance(unit: DistanceUnit): number {
         pins.digitalWritePin(DigitalPin.P8, 1)
         basic.pause(1)
@@ -313,7 +343,8 @@ namespace Oobybot {
      * @param L'unité de mesure de la distance (cm / inch)
      */
     //% block="distance est inférieure à $distance $unit"
-    //% group="Capteurs"
+    //% subcategory="Capteurs"
+    //% group="Capteur ultrason"
     export function ultrasonicDistanceLessThan(distance: number, unit: DistanceUnit): boolean {
         return ultrasonicDistance(unit) <= distance
     }
@@ -323,11 +354,32 @@ namespace Oobybot {
      * @param side Le capteur suiveur de ligne droit ou gauche
      */
     //% block="état capteur suiveur de ligne $side"
-    //% group="Capteurs"
+    //% subcategory="Capteurs"
+    //% group="Capteur suiveur de ligne"
     export function lineFollowerState(side: SideM): boolean {
         if (side == SideM.Right) {
             return pins.digitalReadPin(DigitalPin.P5) == 1
         }
         return pins.digitalReadPin(DigitalPin.P6) == 1
+    }
+
+    /**
+     * Permet de suivre la ligne (noire)
+     */
+    //% block="suivre la ligne"
+    //% subcategory="Capteurs"
+    //% group="Capteur suiveur de ligne"
+    export function followLine(): void {
+        follow = true
+    }
+
+    /**
+     * Permet d'arrêter de suivre la ligne (noire)
+     */
+    //% block="arrêter de suivre la ligne"
+    //% subcategory="Capteurs"
+    //% group="Capteur suiveur de ligne"
+    export function stopFollowLine(): void {
+        follow = false
     }
 }
