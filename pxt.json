@@ -1,5 +1,5 @@
 {
-    "name": "oobybot - Copier",
+    "name": "oobybot",
     "description": "",
     "dependencies": {
         "core": "*",
