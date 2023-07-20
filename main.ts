@@ -199,7 +199,7 @@ namespace Oobybot {
      * @param direction La direction du mouvement
      * @param speed La vitesse des moteurs
      */
-    //% block="faire $direction le robot à la vitesse $speed %"
+    //% block="faire $direction le robot à la vitesse $speed \\%"
     //% subcategory="Mouvement"
     //% group="Mouvement basique"
     export function move(direction: Movement, speed: number): void {
