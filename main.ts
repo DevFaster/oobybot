@@ -270,7 +270,7 @@ namespace Oobybot {
     //% block="tourner à $side d'un angle de $angle °"
     //% subcategory="Mouvement"
     //% group="Mouvement basique"
-    //% angle.min=-360 speed.max=360
+    //% angle.min=-360 angle.max=360
     //% angle.fieldOptions.precision=1
     export function rotateAngle(side: Side, angle: number): void {
         checkInit()
