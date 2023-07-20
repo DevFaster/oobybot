@@ -81,11 +81,11 @@ namespace Oobybot {
 
     /**
      * Initialiser le robot Oobybot et ses capteurs
-     * @param _version La version du robot (avec servomoteurs ou moteurs CC)
+     * @param config La version du robot (avec servomoteurs ou moteurs CC)
      */
-    //% block="initialiser l'Oobybot"
-    export function init(_version: Version): void {
-        version = _version
+    //% block="initialiser l'Oobybot avec des $config"
+    export function init(config: Version): void {
+        version = config
     }
 
     /**
@@ -200,7 +200,7 @@ namespace Oobybot {
      * @param direction La direction du mouvement
      * @param speed La vitesse des moteurs
      */
-    //% block="$direction à la vitesse de $speed %"
+    //% block="faire $direction le robot à la vitesse de $speed %"
     //% subcategory="Mouvement"
     //% group="Mouvement basique"
     export function move(direction: Movement, speed: number): void {
