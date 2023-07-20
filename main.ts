@@ -8,10 +8,9 @@ let blinkDelay = 1000
 
 enum Version {
     //% block="servomoteurs"
-    Servo,
+    Servo = 1,
     //% block="moteurs CC"
-    DCMotor,
-    Undefined
+    DCMotor = 2
 }
 
 enum Movement {
@@ -37,9 +36,9 @@ enum SideM {
 
 enum State {
     //% block="bas"
-    Low,
+    Low = 0,
     //% block="haut"
-    High
+    High = 1
 }
 
 enum DistanceUnit {
@@ -49,7 +48,7 @@ enum DistanceUnit {
     INCH
 }
 
-let version = Version.Undefined
+let version = 0
 let error = false
 
 function blinkLED() {
@@ -70,7 +69,7 @@ basic.forever(blinkLED)
 namespace Oobybot {
     function checkInit(): void {
         if (!error) {
-            if (version == Version.Undefined) {
+            if (version != Version.Servo && version != Version.DCMotor) {
                 error = true
                 control.reset()
             }
