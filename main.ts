@@ -5,8 +5,6 @@
  * @copyright	[i2form](https://www.i2form-sasu.com), 2023
  *
  * @author [email](tom.cahoreau@gmail.com)
- * @version  V1.0.1
- * @date  2023-07-20
  */
 
 enum Version {
@@ -56,10 +54,10 @@ enum DistanceUnit {
  */
 //% weight=100 color=#af5200 icon="\uf188"
 namespace Oobybot {
-    const servoSpeed = 20 // trs/min
+    const servoSpeed = 3 // trs/min
     const dcSpeed = 30 // trs/min
-    const wheelDistance = 10 // cm
-    const wheelRadius = 2 // cm
+    const wheelDistance = 12 // cm
+    const wheelRadius = 2.5 // cm
 
     let ledPin = DigitalPin.P0
     let servoRightPin = AnalogPin.P1
@@ -251,12 +249,6 @@ namespace Oobybot {
         pins.servoWritePin(servoLeftPin, 90 + side * speed * 0.9)
     }
 
-    function servoRotateAngle(side: Side, angle: number): void {
-        servoRotate(side, 100)
-        basic.pause(angle * wheelDistance / (360 * wheelRadius * servoSpeed))
-        servoStop()
-    }
-
     export function servoStop(): void {
         pins.servoWritePin(servoRightPin, 90)
         pins.servoWritePin(servoLeftPin, 90)
@@ -288,12 +280,6 @@ namespace Oobybot {
             pins.analogWritePin(dcRightBackwardPin, speed * 10.23)
             pins.analogWritePin(dcLeftBackwardPin, speed * 10.23)
         }
-    }
-
-    function dcRotateAngle(side: Side, angle: number): void {
-        dcRotate(side, 100)
-        basic.pause(angle * wheelDistance / (360 * wheelRadius * dcSpeed))
-        dcStop()
     }
 
     function dcStop(): void {
@@ -337,6 +323,30 @@ namespace Oobybot {
     }
 
     /**
+     * Permet de contrôler la direction (avant / arrière) ainsi que la distance que le robot Oobybot parcours
+     * @param direction La direction du mouvement
+     * @param distance La distance de parcours
+     * @param unit L'unité de la distance à parcourir
+     */
+    //% block="faire $direction le robot sur $distance $unit \\%"
+    //% subcategory="Mouvement"
+    //% group="Mouvement basique"
+    //% distance.min=0 distance.max=200
+    //% distance.fieldOptions.precision=1
+    export function moveDistance(direction: Movement, distance: number, unit: DistanceUnit): void {
+        checkInit()
+        if (version == Version.Servo) {
+            servoMove(direction, 100)
+            basic.pause(distance / (servoSpeed * Math.PI * 2 * wheelRadius))
+            servoStop()
+        } else {
+            dcMove(direction, 100)
+            basic.pause(distance / (dcSpeed * Math.PI * 2 * wheelRadius))
+            dcStop()
+        }
+    }
+
+    /**
      * Permet de contrôler la direction (droite / gauche) ainsi que la vitesse (de 0 à 100%) du robot Oobybot
      * @param side La direction de rotation
      * @param speed La vitesse des moteurs
@@ -368,9 +378,13 @@ namespace Oobybot {
     export function rotateAngle(side: Side, angle: number): void {
         checkInit()
         if (version == Version.Servo) {
-            servoRotateAngle(side, angle)
+            servoRotate(side, 100)
+            basic.pause(angle * wheelDistance / (360 * wheelRadius * servoSpeed))
+            servoStop()
         } else {
-            dcRotateAngle(side, angle)
+            dcRotate(side, 100)
+            basic.pause(angle * wheelDistance / (360 * wheelRadius * dcSpeed))
+            dcStop()
         }
     }
 
@@ -434,9 +448,9 @@ namespace Oobybot {
         }
         
         if (unit == DistanceUnit.CM) {
-            return Math.round((endImpulsion - startImpulsion) * 0.017)
+            return Math.round((endImpulsion - startImpulsion) * 0.00017)
         }
-        return Math.round((endImpulsion - startImpulsion) * 0.0067)
+        return Math.round((endImpulsion - startImpulsion) * 0.00067) / 10
     }
 
     /**
