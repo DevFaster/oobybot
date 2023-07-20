@@ -434,9 +434,9 @@ namespace Oobybot {
         }
         
         if (unit == DistanceUnit.CM) {
-            return Math.round((endImpulsion - startImpulsion) * 0.17)
+            return Math.round((endImpulsion - startImpulsion) * 0.017)
         }
-        return Math.round((endImpulsion - startImpulsion) * 0.067)
+        return Math.round((endImpulsion - startImpulsion) * 0.0067)
     }
 
     /**
