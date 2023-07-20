@@ -133,6 +133,7 @@ namespace Oobybot {
      */
     //% block="clignoter LED délai $delay ms"
     //% group="LED"
+    //% delay.shadow=timePicker
     export function ledBlink(delay: number): void {
         blink = true
         blinkDelay = delay
@@ -231,6 +232,8 @@ namespace Oobybot {
     //% block="faire $direction le robot à la vitesse $speed \\%"
     //% subcategory="Mouvement"
     //% group="Mouvement basique"
+    //% speed.min=0 speed.max=100
+    //% speed.fieldOptions.precision=1
     export function move(direction: Movement, speed: number): void {
         checkInit()
         if (version == Version.Servo) {
@@ -248,6 +251,8 @@ namespace Oobybot {
     //% block="tourner à %side à la vitesse %speed \\%"
     //% subcategory="Mouvement"
     //% group="Mouvement basique"
+    //% speed.min=0 speed.max=100
+    //% speed.fieldOptions.precision=1
     export function rotate(side: Side, speed: number): void {
         checkInit()
         if (version == Version.Servo) {
@@ -265,6 +270,8 @@ namespace Oobybot {
     //% block="tourner à $side d'un angle de $angle °"
     //% subcategory="Mouvement"
     //% group="Mouvement basique"
+    //% angle.min=-360 speed.max=360
+    //% angle.fieldOptions.precision=1
     export function rotateAngle(side: Side, angle: number): void {
         checkInit()
         if (version == Version.Servo) {
@@ -298,6 +305,8 @@ namespace Oobybot {
     //% block="contrôler le moteur $side pour $direction à la vitesse $speed \\%"
     //% subcategory="Mouvement"
     //% group="Mouvement avancé"
+    //% speed.min=0 speed.max=100
+    //% speed.fieldOptions.precision=1
     export function moveControl(side: SideM, direction: Movement, speed: number): void {
         checkInit()
         if (version == Version.Servo) {
@@ -345,6 +354,8 @@ namespace Oobybot {
     //% block="distance est inférieure à $distance $unit"
     //% subcategory="Capteurs"
     //% group="Capteur ultrason"
+    //% distance.min=0 distance.max=300
+    //% distance.fieldOptions.precision=1
     export function ultrasonicDistanceLessThan(distance: number, unit: DistanceUnit): boolean {
         return ultrasonicDistance(unit) <= distance
     }
