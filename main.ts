@@ -28,13 +28,6 @@ enum Side {
     Left = 1
 }
 
-enum SideM {
-    //% block="droit"
-    Right = -1,
-    //% block="gauche"
-    Left = 1
-}
-
 enum State {
     //% block="bas"
     Low = 0,
@@ -91,24 +84,24 @@ namespace Oobybot {
 
     function lineFollow(): void {
         while (follow) {
-            if (!lineFollowerState(SideM.Left) && !lineFollowerState(SideM.Right)) {
+            if (!lineFollowerState(Side.Left) && !lineFollowerState(Side.Right)) {
                 move(Movement.Forward, 50)
             }
-            if (!lineFollowerState(SideM.Left) && lineFollowerState(SideM.Right)) {
-                moveControl(SideM.Left, Movement.Forward, 30)
-                while (lineFollowerState(SideM.Right)) {
+            if (!lineFollowerState(Side.Left) && lineFollowerState(Side.Right)) {
+                moveControl(Side.Left, Movement.Forward, 30)
+                while (lineFollowerState(Side.Right)) {
                     basic.pause(1)
                 }
                 move(Movement.Forward, 50)
             }
-            if (lineFollowerState(SideM.Left) && !lineFollowerState(SideM.Right)) {
-                moveControl(SideM.Right, Movement.Forward, 30)
-                while (lineFollowerState(SideM.Left)) {
+            if (lineFollowerState(Side.Left) && !lineFollowerState(Side.Right)) {
+                moveControl(Side.Right, Movement.Forward, 30)
+                while (lineFollowerState(Side.Left)) {
                     basic.pause(1)
                 }
                 move(Movement.Forward, 50)
             }
-            if (!lineFollowerState(SideM.Left) && !lineFollowerState(SideM.Right)) {
+            if (!lineFollowerState(Side.Left) && !lineFollowerState(Side.Right)) {
                 moveStop()
                 follow = false
             }
@@ -141,7 +134,7 @@ namespace Oobybot {
      * Permet de contrôler les LED du robot Oobybot
      * @param state L'état des LED du robot
      */
-    //% block="contrôler les LED à l'état $state"
+    //% block="contrôler LED à l'état $state"
     //% group="LED"
     export function ledControl(state: State): void {
         blink = false
@@ -173,7 +166,7 @@ namespace Oobybot {
      * Changer la broche commandant les LED du robot Oobybot
      * @param pin La broche de commande associée aux LED
      */
-    //% block="changer broche LED $pin"
+    //% block="changer broche LED pour $pin"
     //% group="Avancé"
     export function changeLedPin(pin: DigitalPin): void {
         ledPin = pin
@@ -184,10 +177,10 @@ namespace Oobybot {
      * @param side Le servomoteur continu du côté droit ou gauche
      * @param pin La broche de commande associée au servomoteur (droit / gauche)
      */
-    //% block="changer broche servo $side $pin"
+    //% block="changer broche servo de $side pour $pin"
     //% group="Avancé"
-    export function changeServoPin(side: SideM, pin: AnalogPin): void {
-        if (side == SideM.Right) {
+    export function changeServoPin(side: Side, pin: AnalogPin): void {
+        if (side == Side.Right) {
             servoRightPin = pin
         } else {
             servoLeftPin = pin
@@ -200,10 +193,10 @@ namespace Oobybot {
      * @param forwardPin La broche de commande associée au sens avant du moteur CC droit ou gauche
      * @param backwardPin La broche de commande associée au sens arrière du moteur CC droit ou gauche
      */
-    //% block="changer broche moteur CC $side broche avant $forwardPin broche arrière $backwardPin"
+    //% block="changer broche moteur CC de $side broche avant $forwardPin broche arrière $backwardPin"
     //% group="Avancé"
-    export function changeDcPin(side: SideM, forwardPin: AnalogPin, backwardPin: AnalogPin): void {
-        if (side == SideM.Right) {
+    export function changeDcPin(side: Side, forwardPin: AnalogPin, backwardPin: AnalogPin): void {
+        if (side == Side.Right) {
             dcRightForwardPin = forwardPin
             dcRightBackwardPin = backwardPin
         } else {
@@ -217,7 +210,7 @@ namespace Oobybot {
      * @param triggerPin La broche associée à la commande d'émission du capteur ultrason
      * @param echoPin La broche associée à la commande de réception du capteur ultrason
      */
-    //% block="changer broche capteur ultrason trig $triggerPin echo $echoPin"
+    //% block="changer broche capteur ultrason pour trig $triggerPin echo $echoPin"
     //% group="Avancé"
     export function changeUltrasonicPins(triggerPin: DigitalPin, echoPin: DigitalPin): void {
         ultrasonicTriggerPin = triggerPin
@@ -229,10 +222,10 @@ namespace Oobybot {
      * @param side Le capteur suiveur de ligne du côté droit ou gauche
      * @param pin La broche de commande associée au capteur suiveur de ligne
      */
-    //% block="changer broche capteur suiveur de ligne $side $pin"
+    //% block="changer broche capteur suiveur de ligne de $side pour $pin"
     //% group="Avancé"
-    export function changeLineFollowerPin(side: SideM, pin: DigitalPin): void {
-        if (side == SideM.Right) {
+    export function changeLineFollowerPin(side: Side, pin: DigitalPin): void {
+        if (side == Side.Right) {
             lineFollowerRightPin = pin
         } else {
             lineFollowerLeftPin = pin
@@ -254,8 +247,8 @@ namespace Oobybot {
         pins.servoWritePin(servoLeftPin, 90)
     }
 
-    function servoControl(side: SideM, direction: Movement, speed: number): void {
-        if (side == SideM.Right) {
+    function servoControl(side: Side, direction: Movement, speed: number): void {
+        if (side == Side.Right) {
             pins.servoWritePin(servoRightPin, 90 + direction * speed * 0.9)
         } else {
             pins.servoWritePin(servoLeftPin, 90 - direction * speed * 0.9)
@@ -287,8 +280,8 @@ namespace Oobybot {
         pins.analogWritePin(dcLeftBackwardPin, 0)
     }
 
-    export function dcControl(side: SideM, direction: Movement, speed: number): void {
-        if (side == SideM.Right) {
+    export function dcControl(side: Side, direction: Movement, speed: number): void {
+        if (side == Side.Right) {
             if (direction == Movement.Forward) {
                 pins.analogWritePin(dcRightForwardPin, speed * 10.23)
             } else {
@@ -409,12 +402,12 @@ namespace Oobybot {
      * @param  direction Le sens de rotation du moteur (avant / arrière)
      * @param speed La vitesse de rotation du moteur
      */
-    //% block="contrôler le moteur $side pour $direction à la vitesse $speed \\%"
+    //% block="contrôler moteur de $side pour $direction à la vitesse $speed \\%"
     //% subcategory="Mouvement"
     //% group="Mouvement avancé"
     //% speed.min=0 speed.max=100
     //% speed.fieldOptions.precision=1
-    export function moveControl(side: SideM, direction: Movement, speed: number): void {
+    export function moveControl(side: Side, direction: Movement, speed: number): void {
         checkInit()
         if (version == Version.Servo) {
             servoControl(side, direction, speed)
@@ -471,11 +464,11 @@ namespace Oobybot {
      * Renvoi l'état du capteur suiveur de ligne (droit / gauche) du robot Oobybot (Vrai si noir détecté, Faux sinon)
      * @param side Le capteur suiveur de ligne droit ou gauche
      */
-    //% block="état capteur suiveur de ligne $side"
+    //% block="état du capteur suiveur de ligne de $side"
     //% subcategory="Capteurs"
     //% group="Capteur suiveur de ligne"
-    export function lineFollowerState(side: SideM): boolean {
-        if (side == SideM.Right) {
+    export function lineFollowerState(side: Side): boolean {
+        if (side == Side.Right) {
             return pins.digitalReadPin(lineFollowerRightPin) == 1
         }
         return pins.digitalReadPin(lineFollowerLeftPin) == 1
