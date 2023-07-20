@@ -1,113 +1,124 @@
-const servoSpeed = 20 // trs/min
-const dcSpeed = 30 // trs/min
-const wheelDistance = 10 // cm
-const wheelRadius = 2 // cm
-
-let ledPin = DigitalPin.P0
-let servoRightPin = AnalogPin.P1
-let servoLeftPin = AnalogPin.P2
-let dcRightForwardPin = servoRightPin
-let dcLeftForwardPin = servoLeftPin
-let dcRightBackwardPin = AnalogPin.P3
-let dcLeftBackwardPin = AnalogPin.P4
-let ultrasonicTriggerPin = DigitalPin.P8
-let ultrasonicEchoPin = DigitalPin.P16
-let lineFollowerRightPin = DigitalPin.P5
-let lineFollowerLeftPin = DigitalPin.P6
-
-let blink = false
-let blinkDelay = 1000
-let follow = false
-
-enum Version {
-    //% block="servomoteurs"
-    Servo = 1,
-    //% block="moteurs CC"
-    DCMotor = 2
-}
-
-enum Movement {
-    //% block="avancer"
-    Forward = 1,
-    //% block="reculer"
-    Backward = -1
-}
-
-enum Side {
-    //% block="droite"
-    Right = -1,
-    //% block="gauche"
-    Left = 1
-}
-
-enum SideM {
-    //% block="droit"
-    Right = -1,
-    //% block="gauche"
-    Left = 1
-}
-
-enum State {
-    //% block="bas"
-    Low = 0,
-    //% block="haut"
-    High = 1
-}
-
-enum DistanceUnit {
-    //% block="cm"
-    CM,
-    //% block="inch",
-    INCH
-}
-
-let version = 0
-let error = false
-
-function blinkLED(): void {
-    while (blink) {
-        pins.digitalWritePin(ledPin, 1)
-        basic.pause(blinkDelay)
-        pins.digitalWritePin(ledPin, 0)
-        basic.pause(blinkDelay)
-    }
-}
-
-basic.forever(blinkLED)
-
-function lineFollow(): void {
-    while (follow) {
-        if (!Oobybot.lineFollowerState(SideM.Left) && !Oobybot.lineFollowerState(SideM.Right)) {
-            Oobybot.move(Movement.Forward, 50)
-        }
-        if (!Oobybot.lineFollowerState(SideM.Left) && Oobybot.lineFollowerState(SideM.Right)) {
-            Oobybot.moveControl(SideM.Left, Movement.Forward, 30)
-            while (Oobybot.lineFollowerState(SideM.Right)) {
-                basic.pause(1)
-            }
-            Oobybot.move(Movement.Forward, 50)
-        }
-        if (Oobybot.lineFollowerState(SideM.Left) && !Oobybot.lineFollowerState(SideM.Right)) {
-            Oobybot.moveControl(SideM.Right, Movement.Forward, 30)
-            while (Oobybot.lineFollowerState(SideM.Left)) {
-                basic.pause(1)
-            }
-            Oobybot.move(Movement.Forward, 50)
-        }
-        if (!Oobybot.lineFollowerState(SideM.Left) && !Oobybot.lineFollowerState(SideM.Right)) {
-            Oobybot.moveStop()
-            follow = false
-        }
-    }
-}
-
-basic.forever(lineFollow)
+/*！
+ * @file oobybot/main.ts
+ * @brief i2form Oobybot micro:bit makecode extension.
+ *
+ * @copyright	[i2form](https://www.i2form-sasu.com), 2023
+ *
+ * @author [email](tom.cahoreau@gmail.com)
+ * @version  V1.0.1
+ * @date  2023-07-20
+ */
 
 /**
- * Custom blocks
+ * Oobybot functions
  */
 //% weight=100 color=#af5200 icon="\uf188"
 namespace Oobybot {
+    const servoSpeed = 20 // trs/min
+    const dcSpeed = 30 // trs/min
+    const wheelDistance = 10 // cm
+    const wheelRadius = 2 // cm
+
+    let ledPin = DigitalPin.P0
+    let servoRightPin = AnalogPin.P1
+    let servoLeftPin = AnalogPin.P2
+    let dcRightForwardPin = servoRightPin
+    let dcLeftForwardPin = servoLeftPin
+    let dcRightBackwardPin = AnalogPin.P3
+    let dcLeftBackwardPin = AnalogPin.P4
+    let ultrasonicTriggerPin = DigitalPin.P8
+    let ultrasonicEchoPin = DigitalPin.P16
+    let lineFollowerRightPin = DigitalPin.P5
+    let lineFollowerLeftPin = DigitalPin.P6
+
+    let blink = false
+    let blinkDelay = 1000
+    let follow = false
+
+    enum Version {
+        //% block="servomoteurs"
+        Servo = 1,
+        //% block="moteurs CC"
+        DCMotor = 2
+    }
+
+    enum Movement {
+        //% block="avancer"
+        Forward = 1,
+        //% block="reculer"
+        Backward = -1
+    }
+
+    enum Side {
+        //% block="droite"
+        Right = -1,
+        //% block="gauche"
+        Left = 1
+    }
+
+    enum SideM {
+        //% block="droit"
+        Right = -1,
+        //% block="gauche"
+        Left = 1
+    }
+
+    enum State {
+        //% block="bas"
+        Low = 0,
+        //% block="haut"
+        High = 1
+    }
+
+    enum DistanceUnit {
+        //% block="cm"
+        CM,
+        //% block="inch",
+        INCH
+    }
+
+    let version = 0
+    let error = false
+
+    function blinkLED(): void {
+        while (blink) {
+            pins.digitalWritePin(ledPin, 1)
+            basic.pause(blinkDelay)
+            pins.digitalWritePin(ledPin, 0)
+            basic.pause(blinkDelay)
+        }
+    }
+
+    basic.forever(blinkLED)
+
+    function lineFollow(): void {
+        while (follow) {
+            if (!lineFollowerState(SideM.Left) && !lineFollowerState(SideM.Right)) {
+                move(Movement.Forward, 50)
+            }
+            if (!lineFollowerState(SideM.Left) && lineFollowerState(SideM.Right)) {
+                moveControl(SideM.Left, Movement.Forward, 30)
+                while (lineFollowerState(SideM.Right)) {
+                    basic.pause(1)
+                }
+                move(Movement.Forward, 50)
+            }
+            if (lineFollowerState(SideM.Left) && !lineFollowerState(SideM.Right)) {
+                moveControl(SideM.Right, Movement.Forward, 30)
+                while (lineFollowerState(SideM.Left)) {
+                    basic.pause(1)
+                }
+                move(Movement.Forward, 50)
+            }
+            if (!lineFollowerState(SideM.Left) && !lineFollowerState(SideM.Right)) {
+                moveStop()
+                follow = false
+            }
+        }
+    }
+
+    basic.forever(lineFollow)
+
     function checkInit(): void {
         if (!error) {
             if (version != Version.Servo && version != Version.DCMotor) {
