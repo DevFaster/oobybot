@@ -81,7 +81,7 @@ namespace Oobybot {
 
     /**
      * Initialiser le robot Oobybot et ses capteurs
-     * @param version La version du robot (avec servomoteurs ou moteurs CC)
+     * @param _version La version du robot (avec servomoteurs ou moteurs CC)
      */
     //% block="initialiser l'Oobybot"
     export function init(_version: Version): void {
@@ -140,8 +140,8 @@ namespace Oobybot {
         pins.servoWritePin(AnalogPin.P2, 90)
     }
 
-    function servoControl(side: Side, direction: Movement, speed: number): void {
-        if (side == Side.Right) {
+    function servoControl(side: SideM, direction: Movement, speed: number): void {
+        if (side == SideM.Right) {
             pins.servoWritePin(AnalogPin.P1, 90 + direction * speed * 0.9)
         } else {
             pins.servoWritePin(AnalogPin.P2, 90 - direction * speed * 0.9)
@@ -179,8 +179,8 @@ namespace Oobybot {
         pins.analogWritePin(AnalogPin.P4, 0)
     }
 
-    export function dcControl(side: Side, direction: Movement, speed: number): void {
-        if (side == Side.Right) {
+    export function dcControl(side: SideM, direction: Movement, speed: number): void {
+        if (side == SideM.Right) {
             if (direction == Movement.Forward) {
                 pins.analogWritePin(AnalogPin.P1, speed * 10.23)
             } else {
@@ -200,7 +200,7 @@ namespace Oobybot {
      * @param direction La direction du mouvement
      * @param speed La vitesse des moteurs
      */
-    //% block="$direction à $speed %"
+    //% block="$direction à la vitesse de $speed %"
     //% subcategory="Mouvement"
     //% group="Mouvement basique"
     export function move(direction: Movement, speed: number): void {
@@ -217,7 +217,7 @@ namespace Oobybot {
      * @param side La direction de rotation
      * @param speed La vitesse des moteurs
      */
-    //% block="tourner à %side à %speed %"
+    //% block="tourner à %side à la vitesse de %speed %"
     //% subcategory="Mouvement"
     //% group="Mouvement basique"
     export function rotate(side: Side, speed: number): void {
@@ -234,7 +234,7 @@ namespace Oobybot {
      * @param side La direction de rotation
      * @param angle L'angle de rotation
      */
-    //% block="tourner à $side de $angle °"
+    //% block="tourner à $side d'un angle de $angle °"
     //% subcategory="Mouvement"
     //% group="Mouvement basique"
     export function rotateAngle(side: Side, angle: number): void {
@@ -267,10 +267,10 @@ namespace Oobybot {
      * @param  direction Le sens de rotation du moteur (avant / arrière)
      * @param speed La vitesse de rotation du moteur
      */
-    //% block="contrôler le moteur $side pour $direction à $speed %"
+    //% block="contrôler le moteur $side pour $direction à la vitesse de $speed %"
     //% subcategory="Mouvement"
     //% group="Mouvement avancé"
-    export function moveControl(side: Side, direction: Movement, speed: number): void {
+    export function moveControl(side: SideM, direction: Movement, speed: number): void {
         checkInit()
         if (version == Version.Servo) {
             servoControl(side, direction, speed)
