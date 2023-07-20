@@ -9,6 +9,48 @@
  * @date  2023-07-20
  */
 
+enum Version {
+    //% block="servomoteurs"
+    Servo = 1,
+    //% block="moteurs CC"
+    DCMotor = 2
+}
+
+enum Movement {
+    //% block="avancer"
+    Forward = 1,
+    //% block="reculer"
+    Backward = -1
+}
+
+enum Side {
+    //% block="droite"
+    Right = -1,
+    //% block="gauche"
+    Left = 1
+}
+
+enum SideM {
+    //% block="droit"
+    Right = -1,
+    //% block="gauche"
+    Left = 1
+}
+
+enum State {
+    //% block="bas"
+    Low = 0,
+    //% block="haut"
+    High = 1
+}
+
+enum DistanceUnit {
+    //% block="cm"
+    CM,
+    //% block="inch",
+    INCH
+}
+
 /**
  * Oobybot functions
  */
@@ -34,48 +76,6 @@ namespace Oobybot {
     let blink = false
     let blinkDelay = 1000
     let follow = false
-
-    enum Version {
-        //% block="servomoteurs"
-        Servo = 1,
-        //% block="moteurs CC"
-        DCMotor = 2
-    }
-
-    enum Movement {
-        //% block="avancer"
-        Forward = 1,
-        //% block="reculer"
-        Backward = -1
-    }
-
-    enum Side {
-        //% block="droite"
-        Right = -1,
-        //% block="gauche"
-        Left = 1
-    }
-
-    enum SideM {
-        //% block="droit"
-        Right = -1,
-        //% block="gauche"
-        Left = 1
-    }
-
-    enum State {
-        //% block="bas"
-        Low = 0,
-        //% block="haut"
-        High = 1
-    }
-
-    enum DistanceUnit {
-        //% block="cm"
-        CM,
-        //% block="inch",
-        INCH
-    }
 
     let version = 0
     let error = false
