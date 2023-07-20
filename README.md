@@ -1,24 +1,36 @@
-
-> Ouvrir cette page à [https://devfaster.github.io/oobybot/](https://devfaster.github.io/oobybot/)
+# Extension Oobybot pour MakeCode Micro:Bit
 
 ## Utiliser comme extension
 
 Ce dépôt peut être ajouté en tant qu'**extension** dans MakeCode.
 
-* ouvrir [https://makecode.microbit.org/](https://makecode.microbit.org/)
+* ouvrez [https://makecode.microbit.org/](https://makecode.microbit.org/)
 * cliquez sur **Nouveau projet**
 * cliquez sur **Extensions** dans le menu engrenage
-* recherchez **https://github.com/devfaster/oobybot** et importez
+* recherchez **oobybot** et importez
 
-## Éditer ce projet
+## Utilisation
 
-Éditer ce dépôt dans MakeCode.
+* Contrôler le robot Oobybot et son déplacement avec au choix, ses servomoteurs à rotation continu, ou ses motoréducteurs à courant continu.
 
-* ouvrir [https://makecode.microbit.org/](https://makecode.microbit.org/)
-* cliquez sur **Importer** puis cliquez sur **Importer l'URL **
-* collez **https://github.com/devfaster/oobybot** et cliquez sur importer
+```blocks
+Oobybot.init(Version.Servo)
+input.onButtonPressed(Button.A, function() {
+	for (let i = 0; i < 4; i++) {
+		Oobybot.move(Movement.Forward, 100)
+		basic.pause(500)
+		Oobybot.rotateAngle(Side.Left, 90)
+	}
+	Oobybot.stop()
+})
+```
 
-#### Métadonnées (utilisées pour la recherche, le rendu)
+* Lire les données des capteurs : capteur ultrason, capteurs suiveur de ligne
 
-* for PXT/microbit
-<script src="https://makecode.com/gh-pages-embed.js"></script><script>makeCodeRender("{{ site.makecode.home_url }}", "{{ site.github.owner_name }}/{{ site.github.repository_name }}");</script>
+```blocks
+basic.forever(function () {
+	rightLineFollower = Oobybot.lineFollowerState(Side.Right)
+	leftLineFollower = Oobybot.lineFollowerState(Side.Left)
+	distance = Oobybot.ultrasonicDistance(DistanceUnit.CM)
+})
+```
