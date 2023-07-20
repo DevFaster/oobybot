@@ -129,6 +129,38 @@ namespace Oobybot {
     }
 
     /**
+     * Permet de contrôler les LED du robot Oobybot
+     * @param state L'état des LED du robot
+     */
+    //% block="contrôler les LED à l'état $state"
+    //% group="LED"
+    export function ledControl(state: State): void {
+        blink = false
+        pins.digitalWritePin(ledPin, state)
+    }
+
+    /**
+     * Permet de faire clignoter les LED du robot Oobybot
+     * @param delay Délai entre chaque clignotement des LED du robot (en ms)
+     */
+    //% block="clignoter LED délai $delay ms"
+    //% group="LED"
+    //% delay.shadow=timePicker
+    export function ledBlink(delay: number): void {
+        blink = true
+        blinkDelay = delay
+    }
+
+    /**
+     * Éteint les LED du robot Oobybot
+     */
+    //% block="éteindre LED"
+    //% group="LED"
+    export function ledStop(): void {
+        blink = false
+    }
+
+    /**
      * Changer la broche commandant les LED du robot Oobybot
      * @param pin La broche de commande associée aux LED
      */
@@ -196,38 +228,6 @@ namespace Oobybot {
         } else {
             lineFollowerLeftPin = pin
         }
-    }
-
-    /**
-     * Permet de contrôler les LED du robot Oobybot
-     * @param state L'état des LED du robot
-     */
-    //% block="contrôler les LED à l'état $state"
-    //% group="LED"
-    export function ledControl(state: State): void {
-        blink = false
-        pins.digitalWritePin(ledPin, state)
-    }
-
-    /**
-     * Permet de faire clignoter les LED du robot Oobybot
-     * @param delay Délai entre chaque clignotement des LED du robot (en ms)
-     */
-    //% block="clignoter LED délai $delay ms"
-    //% group="LED"
-    //% delay.shadow=timePicker
-    export function ledBlink(delay: number): void {
-        blink = true
-        blinkDelay = delay
-    }
-
-    /**
-     * Éteint les LED du robot Oobybot
-     */
-    //% block="éteindre LED"
-    //% group="LED"
-    export function ledStop(): void {
-        blink = false
     }
     
     function servoMove(direction: Movement, speed: number): void {
