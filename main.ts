@@ -18,9 +18,9 @@ enum Version {
 
 enum Movement {
     //% block="avancer"
-    Forward = 1,
+    Forward = -1,
     //% block="reculer"
-    Backward = -1
+    Backward = 1
 }
 
 enum Side {
