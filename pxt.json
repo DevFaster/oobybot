@@ -1,6 +1,6 @@
 {
     "name": "oobybot",
-    "description": "L'Oobybot est un robot à but pédagogique intervenant dans les écoles de toute la France.",
+    "description": "L'Oobybot est un robot à but pédagogique intervenant dans les écoles de la France entière.",
     "dependencies": {
         "core": "*",
         "radio": "*",
