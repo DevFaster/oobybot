@@ -132,7 +132,7 @@ namespace Oobybot {
 
     /**
      * Permet de contrôler les LED du robot Oobybot
-     * @param state L'état des LED du robot
+     * @param state L'état désiré des LED du robot
      */
     //% block="contrôler LED à l'état $state"
     //% group="LED"
