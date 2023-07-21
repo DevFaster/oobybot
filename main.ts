@@ -321,7 +321,7 @@ namespace Oobybot {
      * @param distance La distance de parcours
      * @param unit L'unité de la distance à parcourir
      */
-    //% block="faire $direction le robot sur $distance $unit \\%"
+    //% block="faire $direction le robot sur $distance $unit"
     //% subcategory="Mouvement"
     //% group="Mouvement basique"
     //% distance.min=0 distance.max=200
