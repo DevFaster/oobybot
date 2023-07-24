@@ -69,7 +69,6 @@ namespace Oobybot {
     let follow = false
 
     let version = 0
-    let error = false
 
     function blinkLED(): void {
         while (blink) {
@@ -111,13 +110,13 @@ namespace Oobybot {
     basic.forever(lineFollow)
 
     function checkInit(): void {
-        if (!error) {
-            if (version != Version.Servo && version != Version.DCMotor) {
-                error = true
-                control.reset()
-            }
-        } else {
+        if (version != Version.Servo && version != Version.DCMotor) {
+            follow = false
+            blink = false
             basic.showIcon(IconNames.No)
+            while (true) {
+                basic.pause(1)
+            }
         }
     }
 
