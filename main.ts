@@ -167,7 +167,7 @@ namespace Oobybot {
      * @param pin La broche de commande associée aux LED
      */
     //% block="changer broche LED pour $pin"
-    //% group="Avancé"
+    //% group="Configuration"
     export function changeLedPin(pin: DigitalPin): void {
         ledPin = pin
     }
@@ -178,7 +178,7 @@ namespace Oobybot {
      * @param pin La broche de commande associée au servomoteur (droit / gauche)
      */
     //% block="changer broche servo de $side pour $pin"
-    //% group="Avancé"
+    //% group="Configuration"
     export function changeServoPin(side: Side, pin: AnalogPin): void {
         if (side == Side.Right) {
             servoRightPin = pin
@@ -194,8 +194,8 @@ namespace Oobybot {
      * @param backwardPin La broche de commande associée au sens arrière du moteur CC droit ou gauche
      */
     //% block="changer broche moteur CC de $side broche avant $forwardPin broche arrière $backwardPin"
-    //% group="Avancé"
-    export function changeDcPin(side: Side, forwardPin: AnalogPin, backwardPin: AnalogPin): void {
+    //% group="Configuration"
+    export function changeDcPins(side: Side, forwardPin: AnalogPin, backwardPin: AnalogPin): void {
         if (side == Side.Right) {
             dcRightForwardPin = forwardPin
             dcRightBackwardPin = backwardPin
@@ -211,7 +211,7 @@ namespace Oobybot {
      * @param echoPin La broche associée à la commande de réception du capteur ultrason
      */
     //% block="changer broche capteur ultrason pour trig $triggerPin echo $echoPin"
-    //% group="Avancé"
+    //% group="Configuration"
     export function changeUltrasonicPins(triggerPin: DigitalPin, echoPin: DigitalPin): void {
         ultrasonicTriggerPin = triggerPin
         ultrasonicEchoPin = echoPin
@@ -223,7 +223,7 @@ namespace Oobybot {
      * @param pin La broche de commande associée au capteur suiveur de ligne
      */
     //% block="changer broche capteur suiveur de ligne de $side pour $pin"
-    //% group="Avancé"
+    //% group="Configuration"
     export function changeLineFollowerPin(side: Side, pin: DigitalPin): void {
         if (side == Side.Right) {
             lineFollowerRightPin = pin
@@ -466,7 +466,7 @@ namespace Oobybot {
      */
     //% block="état du capteur suiveur de ligne de $side"
     //% subcategory="Capteurs"
-    //% group="Capteur suiveur de ligne"
+    //% group="Capteurs suiveurs de ligne"
     export function lineFollowerState(side: Side): boolean {
         if (side == Side.Right) {
             return pins.digitalReadPin(lineFollowerRightPin) == 1
@@ -479,7 +479,7 @@ namespace Oobybot {
      */
     //% block="suivre la ligne"
     //% subcategory="Capteurs"
-    //% group="Capteur suiveur de ligne"
+    //% group="Capteurs suiveurs de ligne"
     export function followLine(): void {
         follow = true
     }
@@ -489,7 +489,7 @@ namespace Oobybot {
      */
     //% block="arrêter de suivre la ligne"
     //% subcategory="Capteurs"
-    //% group="Capteur suiveur de ligne"
+    //% group="Capteurs suiveurs de ligne"
     export function stopFollowLine(): void {
         follow = false
     }
