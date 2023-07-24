@@ -203,7 +203,7 @@ namespace Oobybot {
      * @param forwardPin La broche de commande associée au sens avant du moteur CC droit ou gauche
      * @param backwardPin La broche de commande associée au sens arrière du moteur CC droit ou gauche
      */
-    //% block="changer broche moteur CC de $side broche avant $forwardPin broche arrière $backwardPin"
+    //% block="changer broches moteur CC de $side broche avant $forwardPin broche arrière $backwardPin"
     //% group="Configuration"
     export function changeDcPins(side: Side, forwardPin: AnalogPin, backwardPin: AnalogPin): void {
         checkInit(Version.DCMotor)
@@ -221,7 +221,7 @@ namespace Oobybot {
      * @param triggerPin La broche associée à la commande d'émission du capteur ultrason
      * @param echoPin La broche associée à la commande de réception du capteur ultrason
      */
-    //% block="changer broche capteur ultrason pour trig $triggerPin echo $echoPin"
+    //% block="changer broches capteur ultrason pour trig $triggerPin echo $echoPin"
     //% group="Configuration"
     export function changeUltrasonicPins(triggerPin: DigitalPin, echoPin: DigitalPin): void {
         ultrasonicTriggerPin = triggerPin
