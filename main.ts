@@ -45,8 +45,8 @@ enum DistanceUnit {
  */
 //% weight=100 color=#af5200 icon="\uf188"
 namespace Oobybot {
-    const servoSpeed = 3 // trs/min
-    const dcSpeed = 30 // trs/min
+    const servoSpeed = 130 // trs/min
+    const dcSpeed = 200 // trs/min
     const wheelDistance = 12 // cm
     const wheelRadius = 2.5 // cm
 
