@@ -109,13 +109,23 @@ namespace Oobybot {
 
     basic.forever(lineFollow)
 
-    function checkInit(): void {
-        if (version != Version.Servo && version != Version.DCMotor) {
-            follow = false
-            blink = false
-            basic.showIcon(IconNames.No)
-            while (true) {
-                basic.pause(1)
+    function stop(): void {
+        follow = false
+        blink = false
+        basic.showIcon(IconNames.No)
+        while (true) {
+            basic.pause(1)
+        }
+    }
+
+    function checkInit(config: Version = 0): void {
+        if (config == 0) {
+            if (version != Version.Servo && version != Version.DCMotor) {
+                stop()
+            }
+        } else {
+            if (version != config) {
+                stop()
             }
         }
     }
@@ -179,6 +189,7 @@ namespace Oobybot {
     //% block="changer broche servo de $side pour $pin"
     //% group="Configuration"
     export function changeServoPin(side: Side, pin: AnalogPin): void {
+        checkInit(Version.Servo)
         if (side == Side.Right) {
             servoRightPin = pin
         } else {
@@ -195,6 +206,7 @@ namespace Oobybot {
     //% block="changer broche moteur CC de $side broche avant $forwardPin broche arrière $backwardPin"
     //% group="Configuration"
     export function changeDcPins(side: Side, forwardPin: AnalogPin, backwardPin: AnalogPin): void {
+        checkInit(Version.DCMotor)
         if (side == Side.Right) {
             dcRightForwardPin = forwardPin
             dcRightBackwardPin = backwardPin
