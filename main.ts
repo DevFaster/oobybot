@@ -3,8 +3,6 @@
  * @brief i2form Oobybot micro:bit makecode extension.
  *
  * @copyright	[i2form](https://www.i2form-sasu.com), 2023
- *
- * @author [email](tom.cahoreau@gmail.com)
  */
 
 enum Version {
