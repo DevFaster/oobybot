@@ -135,6 +135,13 @@ namespace Oobybot {
     //% block="initialiser l'Oobybot avec des $config"
     export function init(config: Version): void {
         version = config
+        if (version == Version.Servo) {
+            changeServoPin(Side.Right, servoRightPin)
+            changeServoPin(Side.Left, servoLeftPin)
+        } else {
+            changeDcPins(Side.Right, dcRightForwardPin, dcRightBackwardPin)
+            changeDcPins(Side.Left, dcLeftForwardPin, dcLeftBackwardPin)
+        }
     }
 
     /**
@@ -190,8 +197,10 @@ namespace Oobybot {
         checkInit(Version.Servo)
         if (side == Side.Right) {
             servoRightPin = pin
+            pins.servoSetPulse(servoRightPin, 20000)
         } else {
             servoLeftPin = pin
+            pins.servoSetPulse(servoLeftPin, 20000)
         }
     }
 
