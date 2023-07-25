@@ -49,6 +49,7 @@ namespace Oobybot {
     const dcSpeed = 200 // trs/min
     const wheelDistance = 12 // cm
     const wheelRadius = 2.5 // cm
+    const servoConstants = [88, 0.3]
 
     let ledPin = DigitalPin.P0
     let servoRightPin = AnalogPin.P1
@@ -251,30 +252,30 @@ namespace Oobybot {
             lineFollowerLeftPin = pin
         }
     }
-    
+
     function servoMove(direction: Movement, speed: number): void {
-        pins.servoWritePin(servoRightPin, 90 + direction * speed * 0.9)
-        pins.servoWritePin(servoLeftPin, 90 - direction * speed * 0.9)
+        pins.servoWritePin(servoRightPin, servoConstants[0] + direction * speed * servoConstants[1])
+        pins.servoWritePin(servoLeftPin, servoConstants[0] - direction * speed * servoConstants[1])
     }
 
     function servoRotate(side: Side, speed: number): void {
-        pins.servoWritePin(servoRightPin, 90 + side * speed * 0.9)
-        pins.servoWritePin(servoLeftPin, 90 + side * speed * 0.9)
+        pins.servoWritePin(servoRightPin, servoConstants[0] + side * speed * servoConstants[1])
+        pins.servoWritePin(servoLeftPin, servoConstants[0] + side * speed * servoConstants[1])
     }
 
     export function servoStop(): void {
-        pins.servoWritePin(servoRightPin, 90)
-        pins.servoWritePin(servoLeftPin, 90)
+        pins.servoWritePin(servoRightPin, servoConstants[0])
+        pins.servoWritePin(servoLeftPin, servoConstants[0])
     }
 
     function servoControl(side: Side, direction: Movement, speed: number): void {
         if (side == Side.Right) {
-            pins.servoWritePin(servoRightPin, 90 + direction * speed * 0.9)
+            pins.servoWritePin(servoRightPin, servoConstants[0] + direction * speed * servoConstants[1])
         } else {
-            pins.servoWritePin(servoLeftPin, 90 - direction * speed * 0.9)
+            pins.servoWritePin(servoLeftPin, servoConstants[0] - direction * speed * servoConstants[1])
         }
     }
-    
+
     function dcMove(direction: Movement, speed: number): void {
         if (direction == Movement.Forward) {
             pins.analogWritePin(dcRightForwardPin, speed * 10.23)
@@ -459,7 +460,7 @@ namespace Oobybot {
                 break
             }
         }
-        
+
         if (unit == DistanceUnit.CM) {
             return Math.round((endImpulsion - startImpulsion) * 0.00017)
         }
