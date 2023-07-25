@@ -197,10 +197,12 @@ namespace Oobybot {
         checkInit(Version.Servo)
         if (side == Side.Right) {
             servoRightPin = pin
-            pins.analogSetPeriod(servoRightPin, 20000)
+            pins.servoSetPulse(servoRightPin, 20000)
+            pins.servoSetContinuous(servoRightPin, true)
         } else {
             servoLeftPin = pin
-            pins.analogSetPeriod(servoLeftPin, 20000)
+            pins.servoSetPulse(servoLeftPin, 20000)
+            pins.servoSetContinuous(servoLeftPin, true)
         }
     }
 
@@ -251,18 +253,18 @@ namespace Oobybot {
     }
     
     function servoMove(direction: Movement, speed: number): void {
-        pins.analogWritePin(servoRightPin, 1023 * (1.5 + direction * speed / 200) / 20)
-        pins.analogWritePin(servoLeftPin, 1023 * (1.5 - direction * speed / 200) / 20)
+        pins.servoWritePin(servoRightPin, 90 + direction * speed * 0.9)
+        pins.servoWritePin(servoLeftPin, 90 - direction * speed * 0.9)
     }
 
     function servoRotate(side: Side, speed: number): void {
-        pins.analogWritePin(servoRightPin, 1023 * (1.5 + side * speed / 200) / 20)
-        pins.analogWritePin(servoLeftPin, 1023 * (1.5 + side * speed / 200) / 20)
+        pins.servoWritePin(servoRightPin, 90 + side * speed * 0.9)
+        pins.servoWritePin(servoLeftPin, 90 + side * speed * 0.9)
     }
 
     export function servoStop(): void {
-        pins.analogWritePin(servoRightPin, 1023 * 1.5 / 20)
-        pins.analogWritePin(servoLeftPin, 1023 * 1.5 / 20)
+        pins.servoWritePin(servoRightPin, 90)
+        pins.servoWritePin(servoLeftPin, 90)
     }
 
     function servoControl(side: Side, direction: Movement, speed: number): void {
