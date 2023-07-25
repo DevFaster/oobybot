@@ -349,6 +349,9 @@ namespace Oobybot {
     //% distance.fieldOptions.precision=1
     export function moveDistance(direction: Movement, distance: number, unit: DistanceUnit): void {
         checkInit()
+        if (unit == DistanceUnit.INCH) {
+            distance *= 2.54
+        }
         if (version == Version.Servo) {
             servoMove(direction, 100)
             basic.pause(distance / (servoSpeed * Math.PI * 2 * wheelRadius))
