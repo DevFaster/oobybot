@@ -452,22 +452,21 @@ namespace Oobybot {
         basic.pause(1)
         pins.digitalWritePin(ultrasonicTriggerPin, 0)
 
-        let startImpulsion = 0
-        let endImpulsion = 0
+        let startPulse, endPulse
         while (pins.digitalReadPin(ultrasonicEchoPin) == 0) {
-            startImpulsion = input.runningTimeMicros()
+            startPulse = input.runningTimeMicros()
         }
         while (pins.digitalReadPin(ultrasonicEchoPin) == 1) {
-            endImpulsion = input.runningTimeMicros()
-            if (endImpulsion - startImpulsion > 8824) {
+            endPulse = input.runningTimeMicros()
+            if (endPulse - startPulse > 8824) {
                 break
             }
         }
 
         if (unit == DistanceUnit.CM) {
-            return Math.round((endImpulsion - startImpulsion) * 0.00017)
+            return Math.round((endPulse - startPulse) * 0.00017)
         }
-        return Math.round((endImpulsion - startImpulsion) * 0.00067) / 10
+        return Math.round((endPulse - startPulse) * 0.00067) / 10
     }
 
     /**
