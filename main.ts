@@ -464,9 +464,9 @@ namespace Oobybot {
         }
 
         if (unit == DistanceUnit.CM) {
-            return Math.round((endPulse - startPulse) * 0.00017)
+            return Math.round(0.0034 * (endPulse - startPulse))
         }
-        return Math.round((endPulse - startPulse) * 0.00067) / 10
+        return Math.round(0.0034 * (endPulse - startPulse) / 2.54)
     }
 
     /**
