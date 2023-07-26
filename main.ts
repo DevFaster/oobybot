@@ -396,11 +396,11 @@ namespace Oobybot {
         checkInit()
         if (version == Version.Servo) {
             servoRotate(side, 100)
-            basic.pause(angle * wheelDistance / (360 * wheelRadius * servoSpeed))
+            basic.pause(angle * wheelDistance / (180 * wheelRadius * servoSpeed))
             servoStop()
         } else {
             dcRotate(side, 100)
-            basic.pause(angle * wheelDistance / (360 * wheelRadius * dcSpeed))
+            basic.pause(angle * wheelDistance / (180 * wheelRadius * dcSpeed))
             dcStop()
         }
     }
@@ -423,7 +423,7 @@ namespace Oobybot {
     /**
      * Permet de contrôler un moteur (droit / gauche), sa direction (avant / arrière) et sa vitesse (de 0 à 100%) du robot Oobybot
      * @param side Le moteur droit ou gauche
-     * @param  direction Le sens de rotation du moteur (avant / arrière)
+     * @param direction Le sens de rotation du moteur (avant / arrière)
      * @param speed La vitesse de rotation du moteur
      */
     //% block="contrôler moteur de $side pour $direction à la vitesse $speed \\%"
