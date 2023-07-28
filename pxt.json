@@ -7,8 +7,8 @@
         "microphone": "*"
     },
     "files": [
-        "main.ts",
-        "README.md"
+        "README.md",
+        "oobybot.ts"
     ],
     "testFiles": [
         "test.ts"
