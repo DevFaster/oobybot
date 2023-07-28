@@ -195,7 +195,7 @@ Oobybot.followLine()
 
 Suit une ligne noire indéfiniment.
 
-### Arrête de suivre la ligne
+### Arrêter de suivre la ligne
 
 ```blocks
 Oobybot.stopFollowLine()
