@@ -34,7 +34,7 @@ Le robot utilise la carte micro:bit pour son cerveau, grâce à son extension, s
 ### Contrôler les LED
 
 ```blocks
-Oobybot.ledControl(State.High): void
+Oobybot.ledControl(State.High)
 ```
 
 Contrôle l'état des LED du robot (haut / bas).
@@ -44,7 +44,7 @@ Le bloc prend un seul paramètre : ``state`` (de type ``State``). ``state`` repr
 ### Faire clignoter les LED
 
 ```blocks
-Oobybot.ledBlink(500): void
+Oobybot.ledBlink(500)
 ```
 
 Fait clignoter les LED, le bloc est exécuté de manière asynchrone, il est ainsi possible que d'autres blocs soient exécutés en même temps.
@@ -54,7 +54,7 @@ Le bloc prend un seul paramètre : ``delay`` (un nombre). Le délai est donné e
 ### Arrêter le clignotement des LED
 
 ```blocks
-Oobybot.ledStop(): void
+Oobybot.ledStop()
 ```
 
 Arrête le clignotement des LED.
@@ -62,7 +62,7 @@ Arrête le clignotement des LED.
 ### Changer la broche associée aux LED
 
 ```blocks
-Oobybot.changeLedPin(DigitalPin.P0): void
+Oobybot.changeLedPin(DigitalPin.P0)
 ```
 
 Change la broche associée au LED de la carte micro:bit. En temps normal, c'est la broche ``P0`` qui est associée aux LED.
@@ -72,7 +72,7 @@ Le bloc ne prend qu'un seul argument : ``pin`` (de type ``DigitalPin``). Pour pl
 ### Changer la broche associée à un servomoteur
 
 ```blocks
-Oobybot.changeServoPin(Side.Left, AnalogPin.P1): void
+Oobybot.changeServoPin(Side.Left, AnalogPin.P1)
 ```
 
 Change la broche associée au servomoteur choisi (de droite ou de gauche).
@@ -82,7 +82,7 @@ Le bloc prend deux arguments : ``side`` (de type ``Side``), et ``pin`` (de type 
 ### Changer les broches associées au capteur ultrason
 
 ```blocks
-Oobybot.changeUltrasonicPins(DigitalPin.P8, DigitalPin.P16): void
+Oobybot.changeUltrasonicPins(DigitalPin.P8, DigitalPin.P16)
 ```
 
 Change les broches associées au capteur ultrason (trigger et echo).
@@ -92,7 +92,7 @@ Le bloc prend deux arguments : ``triggerPin`` et ``echoPin`` (de type ``DigitalP
 ### Changer la broche associée à un capteur suiveur de ligne
 
 ```blocks
-Oobybot.changeLineFollowerPin(Side.Left, DigitalPin.P5): void
+Oobybot.changeLineFollowerPin(Side.Left, DigitalPin.P5)
 ```
 
 Change la broche associée au capteur suiveur de ligne choisi (de droite ou de gauche).
@@ -102,7 +102,7 @@ Le bloc prend deux arguments : ``side`` (de type ``Side``), et ``pin`` (de type 
 ### Se déplacer linéairement selon une vitesse
 
 ```blocks
-Oobybot.move(Movement.Forward, 100): void
+Oobybot.move(Movement.Forward, 100)
 ```
 
 Déplace le robot en ligne droite (en avant ou en arrière) selon une vitesse en pourcentage.
@@ -112,7 +112,7 @@ Le bloc prend deux arguments : ``direction`` (de type ``Movement``), et ``speed`
 ### Se déplacer linéairement sur une distance
 
 ```blocks
-Oobybot.moveDistance(Movement.Forward, 100, DistanceUnit.CM, 80): void
+Oobybot.moveDistance(Movement.Forward, 100, DistanceUnit.CM, 80)
 ```
 
 Déplace le robot en ligne droite (en avant ou en arrière) sur une certaine distance.
@@ -122,7 +122,7 @@ Le bloc prend quatre arguments, dont un optionnel : ``direction`` (de type ``Mov
 ### Tourner dans un sens selon une vitesse
 
 ```blocks
-Oobybot.rotate(Side.Left, 100): void
+Oobybot.rotate(Side.Left, 100)
 ```
 
 Fait tourner le robot dans un sens (à gauche ou à droite) selon une certaine vitesse.
@@ -132,12 +132,12 @@ Le bloc prend deux paramètres : ``side`` (de type ``Side``), et ``speed`` (un n
 ### Tourner dans un sens d'un angle précis
 
 ```blocks
-Oobybot.rotateAngle(Side.Left, 90, 80): void
+Oobybot.rotateAngle(Side.Left, 90, 60)
 ```
 
 Fait tourner le robot dans un sens (à gauche ou à droite) selon un certain angle.
 
-Le bloc prend trois paramètres, dont un facultatif : ``side`` (de type ``Side``), ``angle`` (un nombre), et ``speed`` (facultatif, un nomre). ``side`` peut prendre deux valeurs différentes : ``Side.Left`` ("gauche") et ``Side.Right`` ("droit"). ``angle`` est un nombre compris entre 0 et 360, il représente l'angle de rotation en degrées (°). ``speed`` est un nombre compris entre 0 et 100, il représente un pourcentage de la vitesse maximale du moteur. Ce paramètre est par défaut de 80%.
+Le bloc prend trois paramètres, dont un facultatif : ``side`` (de type ``Side``), ``angle`` (un nombre), et ``speed`` (facultatif, un nomre). ``side`` peut prendre deux valeurs différentes : ``Side.Left`` ("gauche") et ``Side.Right`` ("droit"). ``angle`` est un nombre compris entre 0 et 360, il représente l'angle de rotation en degrées (°). ``speed`` est un nombre compris entre 0 et 100, il représente un pourcentage de la vitesse maximale du moteur. Ce paramètre est par défaut de 60%.
 
 ### Arrêter la course du robot
 
@@ -150,7 +150,7 @@ Arrête les moteurs du robot.
 ### Contrôler les moteurs du robot
 
 ```blocks
-Oobybot.moveControl(Side.Left, Movement.Forward, 100): void
+Oobybot.moveControl(Side.Left, Movement.Forward, 100)
 ```
 
 Contrôle un des deux servomoteurs du robot (de droite ou de gauche), son sens et sa vitesse de rotation.
@@ -160,7 +160,7 @@ Le bloc prend trois paramètres : ``side`` (de type ``Side``), ``direction`` (de
 ### Mesurer la distance jusqu'aux obstacles
 
 ```blocks
-Oobybot.ultrasonicDistance(DistanceUnit.CM): number
+basic.showNumber(Oobybot.ultrasonicDistance(DistanceUnit.CM))
 ```
 
 Mesure et retourne la distance jusqu'à l'obstacle le plus proche en face du robot.
@@ -170,7 +170,7 @@ Le bloc prend un seul paramètre : ``unit`` (de type ``DistanceUnit``). ``unit``
 ### Vérifier la proximité à un obstacle
 
 ```blocks
-Oobybot.ultrasonicDistanceLessThan(50, DistanceUnit.CM): boolean
+basic.showString(Oobybot.ultrasonicDistanceLessThan(50, DistanceUnit.CM))
 ```
 
 Mesure puis vérifie si le robot est à une distance inférieure d'un obstacle. Retourne ``true`` si oui, ``false`` sinon.
@@ -180,12 +180,28 @@ Le bloc prend deux arguments : ``distance`` (un nombre), et ``unit`` (de type ``
 ### Mesurer l'état d'un capteur suiveur de ligne
 
 ```blocks
-Oobybot.lineFollowerState(Side.Left): boolean
+basic.showString(Oobybot.lineFollowerState(Side.Left))
 ```
 
 Récupère et retourne l'état d'un capteur suiveur de ligne (de droite ou de gauche) : ``true`` s'il détecte du noir, ``false`` sinon.
 
 Le bloc prend un seul argument : ``side`` (de type ``Side``). ``side`` peut prendre deux valeurs différentes : ``Side.Left`` ("gauche") et ``Side.Right`` ("droit")
+
+### Suivre la ligne
+
+```blocks
+Oobybot.followLine()
+```
+
+Suit une ligne noire indéfiniment.
+
+### Arrête de suivre la ligne
+
+```blocks
+Oobybot.stopFollowLine()
+```
+
+Arrête de suivre la ligne noire.
 
 #### Métadonnées (utilisées pour la recherche, le rendu)
 

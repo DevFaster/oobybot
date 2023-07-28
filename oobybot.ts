@@ -341,23 +341,26 @@ namespace Oobybot {
      * @param direction La direction du mouvement
      * @param distance La distance de parcours
      * @param unit L'unité de la distance à parcourir
+     * @param La vitesse des moteurs
      */
     //% block="faire $direction le robot sur $distance $unit"
     //% subcategory="Mouvement"
     //% group="Mouvement basique"
     //% distance.min=0 distance.max=200
     //% distance.fieldOptions.precision=1
-    export function moveDistance(direction: Movement, distance: number, unit: DistanceUnit): void {
+    //% speed.min=0 speed.max=100
+    //% speed.fieldOptions.precision=1
+    export function moveDistance(direction: Movement, distance: number, unit: DistanceUnit, speed: number = 80): void {
         checkInit()
         if (unit == DistanceUnit.INCH) {
             distance *= 2.54
         }
         if (version == Version.Servo) {
-            servoMove(direction, 100)
+            servoMove(direction, speed)
             basic.pause(distance / (servoSpeed * Math.PI * 2 * wheelRadius))
             servoStop()
         } else {
-            dcMove(direction, 100)
+            dcMove(direction, speed)
             basic.pause(distance / (dcSpeed * Math.PI * 2 * wheelRadius))
             dcStop()
         }
@@ -392,14 +395,14 @@ namespace Oobybot {
     //% group="Mouvement basique"
     //% angle.min=0 angle.max=360
     //% angle.fieldOptions.precision=1
-    export function rotateAngle(side: Side, angle: number): void {
+    export function rotateAngle(side: Side, angle: number, speed: number = 60): void {
         checkInit()
         if (version == Version.Servo) {
-            servoRotate(side, 100)
+            servoRotate(side, speed)
             basic.pause(angle * wheelDistance / (180 * wheelRadius * servoSpeed))
             servoStop()
         } else {
-            dcRotate(side, 100)
+            dcRotate(side, speed)
             basic.pause(angle * wheelDistance / (180 * wheelRadius * dcSpeed))
             dcStop()
         }
