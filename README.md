@@ -170,7 +170,7 @@ Le bloc prend un seul paramètre : ``unit`` (de type ``DistanceUnit``). ``unit``
 ### Vérifier la proximité à un obstacle
 
 ```blocks
-basic.showString(Oobybot.ultrasonicDistanceLessThan(50, DistanceUnit.CM))
+basic.showNumber(Oobybot.ultrasonicDistanceLessThan(50, DistanceUnit.CM))
 ```
 
 Mesure puis vérifie si le robot est à une distance inférieure d'un obstacle. Retourne ``true`` si oui, ``false`` sinon.
@@ -180,7 +180,7 @@ Le bloc prend deux arguments : ``distance`` (un nombre), et ``unit`` (de type ``
 ### Mesurer l'état d'un capteur suiveur de ligne
 
 ```blocks
-basic.showString(Oobybot.lineFollowerState(Side.Left))
+basic.showNumber(Oobybot.lineFollowerState(Side.Left))
 ```
 
 Récupère et retourne l'état d'un capteur suiveur de ligne (de droite ou de gauche) : ``true`` s'il détecte du noir, ``false`` sinon.
