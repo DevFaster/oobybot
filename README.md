@@ -33,7 +33,7 @@ Le robot utilise la carte micro:bit pour son cerveau, grâce à son extension, s
 
 ### Contrôler les LED
 
-```ts
+```blocks
 Oobybot.ledControl(state: State): void
 ```
 
@@ -43,7 +43,7 @@ Le bloc prend un seul paramètre : ``state`` (de type ``State``). ``state`` repr
 
 ### Faire clignoter les LED
 
-```ts
+```blocks
 Oobybot.ledBlink(delay: number): void
 ```
 
@@ -53,7 +53,7 @@ Le bloc prend un seul paramètre : ``delay`` (un nombre). Le délai est donné e
 
 ### Arrêter le clignotement des LED
 
-```ts
+```blocks
 Oobybot.ledStop(): void
 ```
 
@@ -61,7 +61,7 @@ Arrête le clignotement des LED.
 
 ### Changer la broche associée aux LED
 
-```ts
+```blocks
 Oobybot.changeLedPin(pin: DigitalPin): void
 ```
 
@@ -71,7 +71,7 @@ Le bloc ne prend qu'un seul argument : ``pin`` (de type ``DigitalPin``). Pour pl
 
 ### Changer la broche associée à un servomoteur
 
-```ts
+```blocks
 Oobybot.changeServoPin(side: Side, pin: AnalogPin): void
 ```
 
@@ -81,7 +81,7 @@ Le bloc prend deux arguments : ``side`` (de type ``Side``), et ``pin`` (de type 
 
 ### Changer les broches associées au capteur ultrason
 
-```ts
+```blocks
 Oobybot.changeUltrasonicPins(triggerPin: DigitalPin, echoPin: DigitalPin): void
 ```
 
@@ -91,7 +91,7 @@ Le bloc prend deux arguments : ``triggerPin`` et ``echoPin`` (de type ``DigitalP
 
 ### Changer la broche associée à un capteur suiveur de ligne
 
-```ts
+```blocks
 Oobybot.changeLineFollowerPin(side: Side, pin: DigitalPin): void
 ```
 
@@ -101,7 +101,7 @@ Le bloc prend deux arguments : ``side`` (de type ``Side``), et ``pin`` (de type 
 
 ### Se déplacer linéairement selon une vitesse
 
-```ts
+```blocks
 Oobybot.move(direction: Movement, speed: number): void
 ```
 
@@ -111,7 +111,7 @@ Le bloc prend deux arguments : ``direction`` (de type ``Movement``), et ``speed`
 
 ### Se déplacer linéairement sur une distance
 
-```ts
+```blocks
 Oobybot.moveDistance(direction: Movement, distance: number, unit: DistanceUnit, speed: number = 80): void
 ```
 
@@ -121,7 +121,7 @@ Le bloc prend quatre arguments, dont un optionnel : ``direction`` (de type ``Mov
 
 ### Tourner dans un sens selon une vitesse
 
-```ts
+```blocks
 Oobybot.rotate(side: Side, speed: number): void
 ```
 
@@ -131,7 +131,7 @@ Le bloc prend deux paramètres : ``side`` (de type ``Side``), et ``speed`` (un n
 
 ### Tourner dans un sens d'un angle précis
 
-```ts
+```blocks
 Oobybot.rotateAngle(side: Side, angle: number, speed: number = 80): void
 ```
 
@@ -141,7 +141,7 @@ Le bloc prend trois paramètres, dont un facultatif : ``side`` (de type ``Side``
 
 ### Arrêter la course du robot
 
-```ts
+```blocks
 Oobybot.moveStop()
 ```
 
@@ -149,7 +149,7 @@ Arrête les moteurs du robot.
 
 ### Contrôler les moteurs du robot
 
-```ts
+```blocks
 Oobybot.moveControl(side: Side, direction: Movement, speed: number): void
 ```
 
@@ -159,7 +159,7 @@ Le bloc prend trois paramètres : ``side`` (de type ``Side``), ``direction`` (de
 
 ### Mesurer la distance jusqu'aux obstacles
 
-```ts
+```blocks
 Oobybot.ultrasonicDistance(unit: DistanceUnit): number
 ```
 
@@ -169,7 +169,7 @@ Le bloc prend un seul paramètre : ``unit`` (de type ``DistanceUnit``). ``unit``
 
 ### Vérifier la proximité à un obstacle
 
-```ts
+```blocks
 Oobybot.ultrasonicDistanceLessThan(distance: number, unit: DistanceUnit): boolean
 ```
 
@@ -179,7 +179,7 @@ Le bloc prend deux arguments : ``distance`` (un nombre), et ``unit`` (de type ``
 
 ### Mesurer l'état d'un capteur suiveur de ligne
 
-```ts
+```blocks
 Oobybot.lineFollowerState(side: Side): boolean
 ```
 
