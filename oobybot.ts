@@ -343,7 +343,7 @@ namespace Oobybot {
      * @param unit L'unité de la distance à parcourir
      * @param La vitesse des moteurs
      */
-    //% block="faire $direction le robot sur $distance $unit"
+    //% block="faire $direction le robot sur $distance $unit à la vitesse $speed \\%"
     //% subcategory="Mouvement"
     //% group="Mouvement basique"
     //% distance.min=0 distance.max=200
@@ -390,7 +390,7 @@ namespace Oobybot {
      * @param side La direction de rotation
      * @param angle L'angle de rotation
      */
-    //% block="tourner à $side d'un angle de $angle °"
+    //% block="tourner à $side d'un angle de $angle ° à la vitesse $speed \\%"
     //% subcategory="Mouvement"
     //% group="Mouvement basique"
     //% angle.min=0 angle.max=360
