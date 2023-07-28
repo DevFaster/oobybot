@@ -34,7 +34,7 @@ Le robot utilise la carte micro:bit pour son cerveau, grâce à son extension, s
 ### Contrôler les LED
 
 ```blocks
-Oobybot.ledControl(state: State): void
+Oobybot.ledControl(State.High): void
 ```
 
 Contrôle l'état des LED du robot (haut / bas).
@@ -44,7 +44,7 @@ Le bloc prend un seul paramètre : ``state`` (de type ``State``). ``state`` repr
 ### Faire clignoter les LED
 
 ```blocks
-Oobybot.ledBlink(delay: number): void
+Oobybot.ledBlink(500): void
 ```
 
 Fait clignoter les LED, le bloc est exécuté de manière asynchrone, il est ainsi possible que d'autres blocs soient exécutés en même temps.
@@ -62,7 +62,7 @@ Arrête le clignotement des LED.
 ### Changer la broche associée aux LED
 
 ```blocks
-Oobybot.changeLedPin(pin: DigitalPin): void
+Oobybot.changeLedPin(DigitalPin.P0): void
 ```
 
 Change la broche associée au LED de la carte micro:bit. En temps normal, c'est la broche ``P0`` qui est associée aux LED.
@@ -72,7 +72,7 @@ Le bloc ne prend qu'un seul argument : ``pin`` (de type ``DigitalPin``). Pour pl
 ### Changer la broche associée à un servomoteur
 
 ```blocks
-Oobybot.changeServoPin(side: Side, pin: AnalogPin): void
+Oobybot.changeServoPin(Side.Left, AnalogPin.P1): void
 ```
 
 Change la broche associée au servomoteur choisi (de droite ou de gauche).
@@ -82,7 +82,7 @@ Le bloc prend deux arguments : ``side`` (de type ``Side``), et ``pin`` (de type 
 ### Changer les broches associées au capteur ultrason
 
 ```blocks
-Oobybot.changeUltrasonicPins(triggerPin: DigitalPin, echoPin: DigitalPin): void
+Oobybot.changeUltrasonicPins(DigitalPin.P8, DigitalPin.P16): void
 ```
 
 Change les broches associées au capteur ultrason (trigger et echo).
@@ -92,7 +92,7 @@ Le bloc prend deux arguments : ``triggerPin`` et ``echoPin`` (de type ``DigitalP
 ### Changer la broche associée à un capteur suiveur de ligne
 
 ```blocks
-Oobybot.changeLineFollowerPin(side: Side, pin: DigitalPin): void
+Oobybot.changeLineFollowerPin(Side.Left, DigitalPin.P5): void
 ```
 
 Change la broche associée au capteur suiveur de ligne choisi (de droite ou de gauche).
@@ -102,7 +102,7 @@ Le bloc prend deux arguments : ``side`` (de type ``Side``), et ``pin`` (de type 
 ### Se déplacer linéairement selon une vitesse
 
 ```blocks
-Oobybot.move(direction: Movement, speed: number): void
+Oobybot.move(Movement.Forward, 100): void
 ```
 
 Déplace le robot en ligne droite (en avant ou en arrière) selon une vitesse en pourcentage.
@@ -112,7 +112,7 @@ Le bloc prend deux arguments : ``direction`` (de type ``Movement``), et ``speed`
 ### Se déplacer linéairement sur une distance
 
 ```blocks
-Oobybot.moveDistance(direction: Movement, distance: number, unit: DistanceUnit, speed: number = 80): void
+Oobybot.moveDistance(Movement.Forward, 100, DistanceUnit.CM, 80): void
 ```
 
 Déplace le robot en ligne droite (en avant ou en arrière) sur une certaine distance.
@@ -122,7 +122,7 @@ Le bloc prend quatre arguments, dont un optionnel : ``direction`` (de type ``Mov
 ### Tourner dans un sens selon une vitesse
 
 ```blocks
-Oobybot.rotate(side: Side, speed: number): void
+Oobybot.rotate(Side.Left, 100): void
 ```
 
 Fait tourner le robot dans un sens (à gauche ou à droite) selon une certaine vitesse.
@@ -132,7 +132,7 @@ Le bloc prend deux paramètres : ``side`` (de type ``Side``), et ``speed`` (un n
 ### Tourner dans un sens d'un angle précis
 
 ```blocks
-Oobybot.rotateAngle(side: Side, angle: number, speed: number = 80): void
+Oobybot.rotateAngle(Side.Left, 90, 80): void
 ```
 
 Fait tourner le robot dans un sens (à gauche ou à droite) selon un certain angle.
@@ -150,7 +150,7 @@ Arrête les moteurs du robot.
 ### Contrôler les moteurs du robot
 
 ```blocks
-Oobybot.moveControl(side: Side, direction: Movement, speed: number): void
+Oobybot.moveControl(Side.Left, Movement.Forward, 100): void
 ```
 
 Contrôle un des deux servomoteurs du robot (de droite ou de gauche), son sens et sa vitesse de rotation.
@@ -160,7 +160,7 @@ Le bloc prend trois paramètres : ``side`` (de type ``Side``), ``direction`` (de
 ### Mesurer la distance jusqu'aux obstacles
 
 ```blocks
-Oobybot.ultrasonicDistance(unit: DistanceUnit): number
+Oobybot.ultrasonicDistance(DistanceUnit.CM): number
 ```
 
 Mesure et retourne la distance jusqu'à l'obstacle le plus proche en face du robot.
@@ -170,7 +170,7 @@ Le bloc prend un seul paramètre : ``unit`` (de type ``DistanceUnit``). ``unit``
 ### Vérifier la proximité à un obstacle
 
 ```blocks
-Oobybot.ultrasonicDistanceLessThan(distance: number, unit: DistanceUnit): boolean
+Oobybot.ultrasonicDistanceLessThan(50, DistanceUnit.CM): boolean
 ```
 
 Mesure puis vérifie si le robot est à une distance inférieure d'un obstacle. Retourne ``true`` si oui, ``false`` sinon.
@@ -180,7 +180,7 @@ Le bloc prend deux arguments : ``distance`` (un nombre), et ``unit`` (de type ``
 ### Mesurer l'état d'un capteur suiveur de ligne
 
 ```blocks
-Oobybot.lineFollowerState(side: Side): boolean
+Oobybot.lineFollowerState(Side.Left): boolean
 ```
 
 Récupère et retourne l'état d'un capteur suiveur de ligne (de droite ou de gauche) : ``true`` s'il détecte du noir, ``false`` sinon.
