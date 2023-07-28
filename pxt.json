@@ -1,5 +1,5 @@
 {
-    "name": "oobybot",
+    "name": "Oobybot",
     "description": "L'Oobybot est un robot à but pédagogique intervenant dans les écoles de la France entière.",
     "dependencies": {
         "core": "*",
